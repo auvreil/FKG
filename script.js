@@ -59,11 +59,12 @@ const navLinks = document.querySelectorAll('.main-nav a');
 const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === `#${entry.target.id}`
-          ? 'var(--off-white)'
-          : '';
-      });
+     navLinks.forEach(link => {
+  link.classList.toggle(
+    'active',
+    link.getAttribute('href') === `#${entry.target.id}`
+  );
+});
     }
   });
 }, { threshold: 0.4 });
