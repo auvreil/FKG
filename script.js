@@ -1,0 +1,71 @@
+// =========================================
+// FRONT KELLNER GROUP — script.js
+// =========================================
+
+// --- Sticky header on scroll ---
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// --- Hero bg parallax / load trigger ---
+const heroBg = document.querySelector('.hero-bg');
+if (heroBg) {
+  window.addEventListener('load', () => heroBg.classList.add('loaded'));
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    heroBg.style.transform = `scale(1) translateY(${scrollY * 0.25}px)`;
+  }, { passive: true });
+}
+
+// --- Hamburger menu ---
+const hamburger = document.getElementById('hamburger');
+const mainNav = document.getElementById('main-nav');
+
+if (hamburger && mainNav) {
+  hamburger.addEventListener('click', () => {
+    const open = mainNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+  });
+
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+// --- Scroll reveal ---
+const revealEls = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => observer.observe(el));
+
+// --- Active nav highlight on scroll ---
+const sections = document.querySelectorAll('section[id], footer[id]');
+const navLinks = document.querySelectorAll('.main-nav a');
+
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.style.color = link.getAttribute('href') === `#${entry.target.id}`
+          ? 'var(--off-white)'
+          : '';
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(s => sectionObserver.observe(s));
