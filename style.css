@@ -108,7 +108,7 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 999;
   transition: background 0.2s, border-bottom 0.2s;
   border-bottom: 1px solid transparent;
 }
