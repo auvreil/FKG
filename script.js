@@ -10,11 +10,25 @@ window.addEventListener('scroll', () => {
 
 // --- Hero bg parallax / load trigger ---
 const heroBg = document.querySelector('.hero-bg');
+
 if (heroBg) {
-  window.addEventListener('load', () => heroBg.classList.add('loaded'));
+  let scrollY = 0;
+  let ticking = false;
+
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    heroBg.style.transform = `scale(1) translateY(${scrollY * 0.25}px)`;
+    scrollY = window.scrollY;
+
+    // Only trigger an update if one isn't already in progress
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        // Multiplier: 0.2 is subtle, 0.4 is intense. 
+        // Using translate3d forces Hardware Acceleration (GPU)
+        heroBg.style.transform = `scale(1.05) translate3d(0, ${scrollY * 0.3}px, 0)`;
+        ticking = false;
+      });
+
+      ticking = true;
+    }
   }, { passive: true });
 }
 
