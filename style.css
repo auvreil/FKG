@@ -254,7 +254,7 @@ a {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url('/images/deployment1.jpg') center/cover no-repeat;
+  background: url('./images/deployment1.jpg') center/cover no-repeat;
   filter: grayscale(100%) contrast(1.2);
   transform: scale(1.04);
   transition: transform 10s ease-out;
